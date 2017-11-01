@@ -1,6 +1,8 @@
 FROM php:7.1-fpm
 MAINTAINER Antal Áron <antalaron@antalaron.hu>
 
+ENV TZ=Europe/Budapest
+
 RUN apt-get update && \
     apt-get install -y \
         comerr-dev \
@@ -59,6 +61,12 @@ RUN apt-get update && \
         bcmath \
         opcache && \
     \
-    cp /usr/share/zoneinfo/Europe/Budapest /etc/localtime && \
+    cp /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo "Europe/Budapest" > /etc/timezone && \
+    echo "expose_php=Off" > $PHP_INI_DIR/conf.d/docker-php.ini \
+    echo "memory_limit=4G" >> $PHP_INI_DIR/conf.d/docker-php.ini && \
+    echo "max_execution_time=900" >> $PHP_INI_DIR/conf.d/docker-php.ini && \
+    echo "timezone=$TZ" >> $PHP_INI_DIR/conf.d/docker-php.ini && \
+    echo "upload_max_filesize=2G" >> $PHP_INI_DIR/conf.d/docker-php.ini && \
+    echo "post_max_size=2G" >> $PHP_INI_DIR/conf.d/docker-php.ini && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
