@@ -63,7 +63,7 @@ RUN apt-get update && \
     \
     cp /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo "Europe/Budapest" > /etc/timezone && \
-    echo "expose_php=Off" > $PHP_INI_DIR/conf.d/docker-php.ini \
+    echo "expose_php=Off" > $PHP_INI_DIR/conf.d/docker-php.ini && \
     echo "memory_limit=4G" >> $PHP_INI_DIR/conf.d/docker-php.ini && \
     echo "max_execution_time=900" >> $PHP_INI_DIR/conf.d/docker-php.ini && \
     echo "timezone=$TZ" >> $PHP_INI_DIR/conf.d/docker-php.ini && \
